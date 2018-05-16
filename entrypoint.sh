@@ -54,7 +54,7 @@ case $1 in
 
     setup fail
 
-    [ "$1" == "namenode" ] sh /format-namenode.sh
+    [ "$1" != "namenode" ] || sh /format-namenode.sh
     exec gosu $HADOOP_HDFS_USER $HADOOP_HOME/bin/hdfs $@
     ;;
   *)

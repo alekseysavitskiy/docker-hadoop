@@ -8,8 +8,7 @@
 #
 
 if [ ! -f /hadoop/dfs/name/.formatted ]; then
-  # Suppress warnings on "none" network
-  echo "127.0.0.1 `hostname` localhost" >> /etc/hosts
+  echo "running namenode format first time"
 
   su -c "${HADOOP_HOME}/bin/hdfs namenode -format hdfs" $HADOOP_HDFS_USER
   touch /hadoop/dfs/name/.formatted
