@@ -39,11 +39,6 @@ setup() {
   chown_volume
 }
 
-
-## Sleep before starting up
-#
-sleep ${WAITFORSTART:-0}
-
 ## Handle startup behavior
 #
 case $1 in
@@ -55,6 +50,13 @@ case $1 in
     setup fail
 
     [ "$1" != "namenode" ] || sh /format-namenode.sh
+
+    [ "$1" != "datanode" ] || sh /wait-for $HADOOP_NAMENODE_ADDRESS:8020 -t ${WAITFORSTART:-60}
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+        exit $retVal
+    fi
+    #TODO CHECK EXIT CODE, IF 1 THEN EXIT
     exec gosu $HADOOP_HDFS_USER $HADOOP_HOME/bin/hdfs $@
     ;;
   *)

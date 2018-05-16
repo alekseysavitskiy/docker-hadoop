@@ -61,6 +61,8 @@ RUN curl -L http://www-us.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/h
       mkdir -p /hadoop/dfs/name /hadoop/dfs/sname1 /hadoop/dfs/data1 && \
       chown -R hdfs:hdfs /hadoop/dfs
 
+RUN curl -L https://raw.githubusercontent.com/eficode/wait-for/master/wait-for > /wait-for &&\
+            chmod +x /wait-for
 
 VOLUME [ "/etc/hadoop", "/hadoop/dfs/name", "/hadoop/dfs/sname1", "/hadoop/dfs/data1" ]
 
@@ -74,4 +76,4 @@ ADD ./*.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 
 # HDFS exposed ports
-EXPOSE 9000 50010 50020 50070 50075 50090
+EXPOSE 8020 50010 50020 50070 50075 50090
