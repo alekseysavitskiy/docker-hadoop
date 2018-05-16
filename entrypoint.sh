@@ -18,6 +18,7 @@ setup_namenode() {
     cidr_ip=$(ip a show $HADOOP_NAMENODE_BINDIF | grep "inet " | tr -s ' ' | cut -f 3 -d' ')
     HADOOP_NAMENODE_ADDRESS="${cidr_ip%/*}"
   fi
+  sh /format-namenode.sh
 }
 
 # Set Hadoop directories owner
