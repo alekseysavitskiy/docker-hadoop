@@ -1,7 +1,7 @@
 FROM java:8-jre-alpine
 MAINTAINER Denis Baryshev <dennybaa@gmail.com>
 
-ENV HADOOP_VERSION 2.8.3
+ENV HADOOP_VERSION 2.7.6
 ENV HADOOP_HOME /usr/local/hadoop-${HADOOP_VERSION}
 ENV HADOOP_CONF_DIR /etc/hadoop
 ENV HADOOP_HDFS_USER hdfs
@@ -15,7 +15,7 @@ ENV HADOOP_CLIENT_OPTS -Xmx512m
 
 
 LABEL vendor=ActionML \
-      version_tags="[\"2.8\",\"2.8.3\"]"
+      version_tags="[\"2.7\",\"2.7.6\"]"
 
 
 # install built-in packages and create users
@@ -48,7 +48,7 @@ RUN apk add --update --no-cache --virtual .build-deps gnupg && \
         gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
         gpg --batch --verify /tmp/gosu.asc /usr/local/bin/gosu && \
             \
-      curl -L https://github.com/kelseyhightower/confd/releases/download/v0.12.0-alpha3/confd-0.12.0-alpha3-linux-amd64 \
+      curl -L https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64 \
            -o /usr/local/bin/confd && chmod 755 /usr/local/bin/confd && \
     apk del .build-deps && rm -rf /tmp/*
 
