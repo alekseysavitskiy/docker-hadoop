@@ -56,7 +56,8 @@ case $1 in
     if [ $retVal -ne 0 ]; then
         exit $retVal
     fi
-    #TODO CHECK EXIT CODE, IF 1 THEN EXIT
+    [ "$1" != "datanode" ] || sh /bootstrap-hdfs.sh
+
     exec gosu $HADOOP_HDFS_USER $HADOOP_HOME/bin/hdfs $@
     ;;
   *)

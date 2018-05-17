@@ -34,18 +34,15 @@ create_hdfs_path() #signature path, user, perms, group
 #
 : ${HADOOP_NAMENODE_ADDRESS:?Must be provided\!}
 
-## Sleep before starting up
-#
-sleep ${WAITFORSTART:-0}
-
 # Configure hadoop from template (confd)
 #
 confd -onetime -backend env
 
-# Bootstrap given paths (by reading a space delemitered list)
-if [ ! -f /hadoop/dfs/data1/.bootstrapped ]; then
+su -p -c "${HADOOP_HOME}/bin/hdfs dfs -test -f /.bootstrapped" $HADOOP_HDFS_USER
+retVal=$?
+if [ $retVal -ne 0 ]; then
     cat ${HADOOP_CONF_DIR}/hdfs-bootstrap-paths | grep -Ev "\s*#" | while read path user perms group; do
        create_hdfs_path $path $user $perms $group
     done
-    touch /hadoop/dfs/data1/.bootstrapped
+    su -p -c "${HADOOP_HOME}/bin/hdfs dfs -touchz /.bootstrapped" $HADOOP_HDFS_USER
 fi
