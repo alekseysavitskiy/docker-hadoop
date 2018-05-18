@@ -31,12 +31,11 @@ they connect to namenode -->
         dockerhadoop_namenode-primary_1.dockerhadoop_default:8020.
       DataNode fails to start in such case, so we resolve to IP!
 -->
-<property>
+<!--property>
     <name>dfs.namenode.rpc-address</name>
     {{$namenode_address := getenv "HADOOP_NAMENODE_ADDRESS" -}}
     <value>{{with $a := lookupIP $namenode_address}}{{index $a 0}}{{end}}:8020</value>
-</property>
-
+</property-->
 <property>
     <name>dfs.namenode.checkpoint.dir</name>
     <value>file:///hadoop/dfs/sname1</value>
