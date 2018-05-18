@@ -26,16 +26,15 @@ they connect to namenode -->
     <name>dfs.namenode.datanode.registration.ip-hostname-check</name>
     <value>false</value>
 </property>
+<property>
+  <name>dfs.namenode.rpc-bind-host</name>
+  <value>0.0.0.0</value>
+</property>
 
-<!--  Hadoop has a bug with difficult DNS names like -
-        dockerhadoop_namenode-primary_1.dockerhadoop_default:8020.
-      DataNode fails to start in such case, so we resolve to IP!
--->
-<!--property>
-    <name>dfs.namenode.rpc-address</name>
-    {{$namenode_address := getenv "HADOOP_NAMENODE_ADDRESS" -}}
-    <value>{{with $a := lookupIP $namenode_address}}{{index $a 0}}{{end}}:8020</value>
-</property-->
+<property>
+  <name>dfs.namenode.servicerpc-bind-host</name>
+  <value>0.0.0.0</value>
+</property>
 <property>
     <name>dfs.namenode.checkpoint.dir</name>
     <value>file:///hadoop/dfs/sname1</value>
